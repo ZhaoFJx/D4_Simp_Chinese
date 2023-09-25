@@ -1,20 +1,20 @@
 [config]
 name  = usaoverhaul
-guiname = "2021 | United States of America"
-description = "The United States of America is the world's third or fourth largest country by total area, and the third most populous country in the world. Americans are a racially and ethnically diverse population that has been shaped through centuries of immigration.The United States is a federal republic and a representative democracy. It is a founding member of the United Nations, World Bank, International Monetary Fund and NATO. The USA is a permanent member of the United Nations Security Council."
+guiname = "2021 | 美利坚合众国"
+description = "美利坚合众国是世界上总面积第三或第四大的国家，也是世界上人口第三多的国家。 美国人是一个种族和民族多元化的人口，是经过几个世纪的移民形成的。美国是联邦共和国和代议制民主国家。 它是联合国、世界银行、国际货币基金组织和北约的创始成员。 美国是联合国安理会常任理事国。"
 
-jobtitle = "President"
+jobtitle = "总统"
 
 [stats]
-Capital: = "Washington D.C."
-Population: = "328 million (Jan 2020)"
-Size: = "9.8 million sq km"
-Largest City: = "New York City"
-Religion: = "71% Christian, 23% None, 2% Jewish"
-Ethnicity: = "76.5% White, 18.3% Latino, 13.4% Black"
-National Anthem: = "The Star-Spangled Banner"
-Top Tourist Destination: = "The Grand Canyon"
-Wealthiest Citizen: = "Jeff Bezos (2020)"
+Capital: = "华盛顿哥伦比亚特区"
+Population: = "3.28 亿（2020 年 1 月）"
+Size: = "980 万平方公里"
+Largest City: = "纽约市"
+Religion: = "71% 基督教, 23% 无, 2% 犹太教"
+Ethnicity: = "76.5% 白人, 18.3% 拉丁裔, 13.4% 黑人"
+National Anthem: = "星条旗永不落"
+Top Tourist Destination: = "大峡谷"
+Wealthiest Citizen: = "杰夫·贝佐斯 (2020)"
 
 
 

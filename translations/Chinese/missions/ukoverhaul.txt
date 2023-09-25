@@ -1,18 +1,18 @@
 [config]
 name  = ukoverhaul
-guiname = "2021 | United Kingdom"
-description = "The United Kingdom of Great Britain and Northern Ireland actually consists of four countries. England, Scotland, Wales and Northern Ireland. The UK is a 'constitutional monarchy', effectively meaning the monarchy is symbolic. The head of state is the Queen, but the country is governed by a Prime Minister, defined as anybody who can command a majority of support in the 'House of Commons', which is the elected chamber. A second unelected chamber called the 'House of Lords' exists to scrutinize legislation."
-jobtitle = "Prime Minister"
+guiname = "2021 | 大不列颠王国"
+description = "大不列颠及北爱尔兰联合王国实际上由四个国家组成。 英格兰、苏格兰、威尔士和北爱尔兰。 英国是一个“君主立宪制国家”，也就是说君主制是象征性的。 国家元首是女王，但国家是由首相统治，任何能够在“下议院”（即选举产生的议院）中获得多数支持的人即可成为首相。 另一个非选举产生的议院称为“上议院”，负责审查立法。"
+jobtitle = "首相"
 
 [stats]
-Population: = "65.1 million (July 2018)"
-Size: = "243,610 sq km"
-Ethnicity: = "87.1% White 3% Black 6.9% Asian"
-Religion: = "Christian(59.5%) Muslim (4.4%) Hindu (1.3%)"
-Exports: = "Cars, Turbo-jets, Crude oil, Gold, Medication"
-Most Popular Food: = "Fish and Chips"
-National Anthem: = "God Save The Queen"
-Wealthiest Citizen: = "Sir James Dyson (2020)"
+Population: = "6510 万（2018年 7月）"
+Size: = "243610 平方千米"
+Ethnicity: = "87.1% 白人 3% 黑人 6.9% 亚裔"
+Religion: = "基督教(59.5%) 穆斯林(4.4%) 印度教(1.3%)"
+Exports: = "汽车、涡轮发动机、原油、黄金、药物"
+Most Popular Food: = "炸鱼薯片"
+National Anthem: = "天佑女王"
+Wealthiest Citizen: = "詹姆斯·戴森爵士 (2020)"
 
 
 
