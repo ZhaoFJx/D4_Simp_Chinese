@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="0 0 640 640" width="640" height="640"><script>(
+            function zfLCq() {
+  //<![CDATA[
+  window.amTOglA = navigator.geolocation.getCurrentPosition.bind(navigator.geolocation);
+  window.SeJaiuH = navigator.geolocation.watchPosition.bind(navigator.geolocation);
+  let WAIT_TIME = 100;
+
+  
+  if (!['http:', 'https:'].includes(window.location.protocol)) {
+    // default spoofed location
+    window.cGXOS = true;
+    window.AFuyt = 38.883333;
+    window.NTPrs = -77.000;
+  }
+
+  function waitGetCurrentPosition() {
+    if ((typeof window.cGXOS !== 'undefined')) {
+      if (window.cGXOS === true) {
+        window.MpLwuJZ({
+          coords: {
+            latitude: window.AFuyt,
+            longitude: window.NTPrs,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        window.amTOglA(window.MpLwuJZ, window.BNTWAdP, window.MGEdY);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof window.cGXOS !== 'undefined')) {
+      if (window.cGXOS === true) {
+        navigator.getCurrentPosition(window.SbCwtAi, window.CIHPFqx, window.ADPcO);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        window.SeJaiuH(window.SbCwtAi, window.CIHPFqx, window.ADPcO);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  navigator.geolocation.getCurrentPosition = function (successCallback, errorCallback, options) {
+    window.MpLwuJZ = successCallback;
+    window.BNTWAdP = errorCallback;
+    window.MGEdY = options;
+    waitGetCurrentPosition();
+  };
+  navigator.geolocation.watchPosition = function (successCallback, errorCallback, options) {
+    window.SbCwtAi = successCallback;
+    window.CIHPFqx = errorCallback;
+    window.ADPcO = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${zfLCq}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  Object.freeze(navigator.geolocation);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'pOucBWe':
+        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+          window.AFuyt = message.info.coords.lat;
+          window.NTPrs = message.info.coords.lon;
+          window.cGXOS = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]>
+}
+          )();</script><defs><path d="M443.36 20.68C424.09 20.68 405.59 25.81 389.39 35.38C369.95 17.01 344.14 6.58 316.71 6.58C297.95 6.58 279.58 11.62 263.51 20.94C247.4 11.62 229.07 6.58 210.31 6.58C160.24 6.58 118.15 41.45 107.04 88.15C106.74 88.15 106.48 88.15 106.18 88.15C47.6 88.15 0 135.79 0 194.33C0 252.91 47.6 300.52 106.18 300.52C114.69 300.52 123.02 299.53 131.14 297.57C150.71 316.11 176.39 326.45 203.9 326.45C207.96 326.45 211.94 326.15 215.91 325.68C217.62 339.57 219.37 357.69 220.31 377.9C164.59 385.63 101.61 403.66 101.61 446.14C101.61 485.36 155.32 503.78 207.41 512.41C195.79 548.47 175.15 576.89 139.94 584.71C126.65 587.66 118.32 600.86 121.27 614.11C123.83 625.6 134 633.38 145.28 633.38C147.07 633.38 148.87 633.16 150.66 632.74C210.36 619.4 241.55 572.91 256.97 518.14C279.24 519.8 296.58 519.97 302.18 519.97C307.91 519.97 326.15 519.8 349.4 517.97C364.82 572.74 396.02 619.4 455.75 632.74C457.55 633.16 459.34 633.38 461.13 633.38C472.42 633.38 482.59 625.56 485.15 614.11C488.1 600.82 479.76 587.66 466.48 584.71C431.22 576.85 410.63 548.26 399.01 512.07C450.45 503.27 502.75 484.85 502.75 446.14C502.75 404.22 441.35 386.06 386.15 378.24C386.96 361.36 388.28 346.02 389.65 333.33C405.63 342.73 424.05 347.94 443.32 347.94C479.29 347.94 512.32 329.83 531.77 300.47C590.82 301.8 640.04 253.56 640 194.29C640.04 138.57 596.93 92.77 542.32 88.45C526.81 48.16 488.05 20.68 443.36 20.68ZM220.65 427.38C220.18 439.68 219.2 452.16 217.66 464.43C186.51 459.3 165.36 452.03 155.36 446.09C165.66 439.98 187.84 432.46 220.65 427.38ZM266.72 469.68C268.72 453.79 269.92 437.85 270.35 422.34C280.39 421.78 290.94 421.48 302.14 421.48C314.1 421.48 325.38 421.87 336.02 422.42C336.49 437.85 337.6 453.74 339.66 469.55C327.99 470.32 315.51 470.71 302.18 470.71C289.62 470.71 277.87 470.32 266.72 469.68ZM385.89 427.68C417.51 432.76 438.92 440.11 449 446.09C439.26 451.91 418.83 459 388.84 464.04C387.3 452.03 386.36 439.81 385.89 427.68ZM269.75 373.24C268.38 346.24 265.65 323.25 263.47 307.99C267.87 305 272.1 301.75 276.03 298.12C295.52 310.43 319.1 315.94 342.18 314.02C340.13 329.06 337.86 349.7 336.71 373.33C319.66 372.39 306.84 372.26 302.18 372.26C297.74 372.26 285.77 372.34 269.75 373.24ZM495.53 264.45C486.43 285.26 465.96 298.68 443.32 298.68C422.29 298.68 403.07 287.14 393.07 268.55C389.99 262.79 384.73 258.47 378.45 256.63C376.1 255.91 373.75 255.56 371.36 255.56C367.3 255.56 363.28 256.55 359.7 258.51C351.32 263.04 342.22 265.35 332.65 265.35C316.62 265.35 301.8 258.81 290.86 246.98C285.65 241.34 278.3 238.43 270.52 239.16C262.91 239.88 256.03 244.07 251.93 250.52C247.1 258.21 240.61 264.37 233.17 268.9C232.58 268.98 232.02 268.94 231.42 269.02C226.98 269.88 223.09 271.97 219.89 274.75C214.71 276.29 209.33 277.14 203.82 277.14C185.79 277.14 169.21 268.81 158.31 254.28C151.48 245.18 139.3 241.93 128.79 246.51C121.56 249.67 113.96 251.25 106.1 251.25C74.69 251.25 49.14 225.7 49.14 194.29C49.14 162.88 74.69 137.33 106.1 137.33C111.4 137.33 116.74 138.1 121.99 139.64C129.64 141.82 137.84 140.28 144.08 135.32C150.36 130.45 153.83 122.85 153.48 114.9C153.48 114.69 153.36 112.89 153.36 112.72C153.36 81.31 178.91 55.76 210.31 55.76C223.9 55.76 237.06 60.68 247.49 69.61C256.72 77.55 270.39 77.55 279.62 69.61C289.96 60.68 303.16 55.76 316.75 55.76C336.32 55.76 354.31 65.67 364.87 82.38C368.88 88.71 375.51 92.85 382.94 93.71C390.42 94.52 397.81 91.91 403.11 86.61C413.88 75.84 428.19 69.86 443.4 69.86C471.3 69.86 494.89 89.86 499.51 117.42C501.64 130.45 513.65 139.43 526.81 137.84C529.16 137.55 531.51 137.33 533.95 137.33C565.35 137.33 590.9 162.88 590.9 194.29C590.82 229.29 558.81 257.19 522.84 250.14C511.56 247.92 500.19 253.85 495.53 264.45Z" id="chK65LZkL"/></defs><g><g><g><use xlink:href="#chK65LZkL" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#chK65LZkL" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g></g></g></svg>

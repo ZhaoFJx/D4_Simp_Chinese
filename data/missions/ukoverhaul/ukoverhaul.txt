@@ -1,0 +1,113 @@
+[config]
+currency = "£"
+population = 31523
+economic_cycle_start = 0.38
+min_income = 0
+max_income = 150000
+min_gdp = 800000
+max_gdp = 2400000
+wealth_mod = 4.79
+fx_rate_to_pound = 1.0
+starting_debt = 1798000
+name  = ukoverhaul
+names_file = "data/names/uknames.txt"
+flag = "flag_uk.png"
+apathy = 0.4
+map = "ukflagnew.svg"
+GUID = 11
+
+
+[policies]
+AgricultureSubsidies = 0.45
+AirlineTax = 0.2
+AlcoholTax = 0.68
+ArtsSubsidies = 0.63
+BodyCameras = 0.5
+BorderControls = 0.34
+BusLanes = 0.6
+CCTVCameras = 0.8
+CapitalGainsTax = 0.2
+CarEmmissionsLimits = 0.65
+CarTax = 0.44
+ChildBenefit = 0.6
+CleanEnergySubsidies = 0.3
+CommunityPolicing = 0.82
+CorporationTax = 0.37
+Creationism = 0.8
+DisabilityBenefit = 0.6
+ExecutiveTermLimit = 1.0
+ExecutiveTermLength = 0.5
+FamilyPlanning = 0.75
+FemaleGenitalMutilationBan = 0.2
+FoodStandards = 0.6
+ForeignAid = 0.61
+ForeignInvestorTaxBreaks = 0.25
+FreeBusPasses = 0.65
+Gambling = 0.28
+GameHunting = 0.65
+GayMarriage = 0.75
+GenderDiscriminationAct = 0.25
+GenderTransition = 0.2
+GraduateTax = 0.4
+IncomeTax = 0.45
+InheritanceTax = 0.3
+IntellectualPropertyRights = 0.9
+JudiciaryIndependence = 0.85
+JuryTrial = 0.6
+LabourLaws = 0.36
+LegalAid = 0.6
+MaternityLeave = 0.66
+MilitarySpending = 0.46
+MinimumWage = 0.5
+Narcotics = 0
+NuclearFission = 0.22
+PayrollTax = 0.52
+PetrolTax = 0.58
+PoliceForce = 0.64
+PollutionControls = 0.6
+PressFreedom = 0.85
+PrisonerTagging = 0.29
+PrisonRegime = 0.3
+PropertyTax = 0.27
+RaceDiscriminationAct = 0.8
+Recycling = 0.47
+RoadBuilding = 0.42
+SalesTax = 0.51
+ScienceFunding = 0.53
+SelectiveSchooling = 0.75
+SpeedCameras = 0.4
+SocialCare = 0.1
+StateBroadcaster = 0.55
+StateHealthService = 0.68
+StateHousing = 0.45
+StatePensions = 0.61
+StateSchools = 0.67
+StemCells = 0.25
+Tasers = 0.34
+TobaccoTax = 0.3
+UnemployedBenefit = 0.62
+WinterFuelSubsidy = 0.55
+WorkSafetyLaw = 0.69
+unmembership = 0.35
+natomembership = 0.55
+secretservice = 0.8
+HybridCarsInitiative = 0.5
+NuclearWeapons = 0.66
+
+_prereq_has_coast = 1
+_prereq_royal_family = 1
+_prereq_sovereign_currency = 1
+_prereq_wmd = 1
+_prereq_nuclear_tech = 1
+
+[options]
+MULTIPLEPARTIES
+
+
+
+
+
+
+
+
+

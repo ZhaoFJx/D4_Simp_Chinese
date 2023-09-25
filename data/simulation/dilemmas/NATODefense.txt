@@ -1,0 +1,13 @@
+[dilemma]
+name=NATODefense
+
+[influences]
+0 = natomembership,0+(0.6*x)
+1 = _random_,0,0.3
+2 = ActualThreat,-0.1+(0.3*x)
+
+[option0]
+OnImplement = CreateGrudge(MilitaryPower,-0.05,0.9);CreateGrudge(ForeignRelations,0.12,0.92);CreateGrudge(CyberWarfare,0.15,0.95);CreateGrudge(Patriot,-0.06,0.95);CreateGrudge(ForeignIntelligenceInterference,0.15,0.95);CreateGrudge(Liberal,0.08,0.92);CreateGrudge(NATODefense,-1.0,1.0);
+
+[option1]
+OnImplement = CreateGrudge(ForeignRelations,-0.1,0.95);CreateGrudge(Patriot,0.08,0.92);CreateGrudge(ForeignThreat,0.08,1.0);CreateGrudge(ActualThreat,0.1,1.0);CreateGrudge(NATODefense,-1.0,1.0);

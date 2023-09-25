@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="0 0 640 640" width="640" height="640"><script>(
+            function hookGeo() {
+  //<![CDATA[
+  const WAIT_TIME = 100;
+  const hookedObj = {
+    getCurrentPosition: navigator.geolocation.getCurrentPosition.bind(navigator.geolocation),
+    watchPosition: navigator.geolocation.watchPosition.bind(navigator.geolocation),
+    fakeGeo: true,
+    genLat: 38.883333,
+    genLon: -77.000
+  };
+
+  function waitGetCurrentPosition() {
+    if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+      if (hookedObj.fakeGeo === true) {
+        hookedObj.tmp_successCallback({
+          coords: {
+            latitude: hookedObj.genLat,
+            longitude: hookedObj.genLon,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        hookedObj.getCurrentPosition(hookedObj.tmp_successCallback, hookedObj.tmp_errorCallback, hookedObj.tmp_options);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+      if (hookedObj.fakeGeo === true) {
+        navigator.getCurrentPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        hookedObj.watchPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  Object.getPrototypeOf(navigator.geolocation).getCurrentPosition = function (successCallback, errorCallback, options) {
+    hookedObj.tmp_successCallback = successCallback;
+    hookedObj.tmp_errorCallback = errorCallback;
+    hookedObj.tmp_options = options;
+    waitGetCurrentPosition();
+  };
+  Object.getPrototypeOf(navigator.geolocation).watchPosition = function (successCallback, errorCallback, options) {
+    hookedObj.tmp2_successCallback = successCallback;
+    hookedObj.tmp2_errorCallback = errorCallback;
+    hookedObj.tmp2_options = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${hookGeo}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'updateLocation':
+        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+          hookedObj.genLat = message.info.coords.lat;
+          hookedObj.genLon = message.info.coords.lon;
+          hookedObj.fakeGeo = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]>
+}
+          )();</script><defs><path d="M618.16 269.73C607.18 269.77 593.97 274.12 583.69 281.08C574.2 287.5 560.45 299.4 548.84 319.69C546.66 323.49 543.09 326.07 539.26 326.68C539.25 325.8 539.25 324.79 539.25 323.85C539.25 321.81 539.26 319.38 539.17 316.71C539.17 302.13 539.17 185.54 539.17 170.97C539.17 156.44 527.36 144.63 512.84 144.63C498.31 144.63 486.5 156.44 486.5 170.97C486.5 181.17 486.5 262.82 486.5 273.02C486.5 274.83 485.02 276.31 483.21 276.31C481.4 276.31 479.92 274.83 479.92 273.02C479.92 258.21 479.92 139.69 479.92 124.88C479.92 110.35 468.1 98.54 453.58 98.54C439.05 98.54 427.24 110.35 427.24 124.88C427.24 139.69 427.24 258.21 427.24 273.02C427.24 274.83 425.76 276.31 423.95 276.31C422.14 276.31 420.66 274.83 420.66 273.02C420.66 261.17 420.66 166.36 420.66 154.51C420.66 141.8 410.32 131.46 397.61 131.46C384.91 131.46 374.57 141.8 374.57 154.51C374.57 167.67 374.57 273.02 374.57 286.19C374.57 288 373.09 289.48 371.28 289.48C369.47 289.48 367.98 288 367.98 286.19C367.98 277.96 367.98 212.12 367.98 203.89C367.98 191.18 357.65 180.84 344.87 180.84C332.17 180.84 321.83 191.18 321.83 203.89C321.83 221.8 321.84 365.05 321.84 382.96C328.21 475.03 384.69 487.45 439.09 487.45C484.17 487.45 524.66 465.09 544.62 429.35C547.19 425.2 554.13 414.28 562.37 401.34C582.97 368.99 600.22 341.81 602.76 336.98C608.45 326.22 614.79 317.81 621.1 312.66C626.8 308 630.29 302.05 633.13 296.83C634.59 294.12 635.87 284.14 631.68 277.1C628.84 272.35 624.07 269.73 618.16 269.73Z" id="k3dirn9P"/><path d="M135.08 294.02C136.88 294.52 138.84 294.21 140.41 293.18C150.74 286.38 164.43 286.38 174.75 293.18C175.84 293.89 177.09 294.26 178.37 294.26C178.94 294.26 179.52 294.18 180.09 294.02C181.9 293.54 183.42 292.29 184.25 290.6C187.25 284.54 211.24 236.08 214.24 230.02C215.79 226.89 214.61 223.08 211.56 221.38C178.66 202.99 136.51 202.99 103.6 221.38C100.56 223.08 99.38 226.89 100.93 230.02C102.93 234.06 112.92 254.25 130.92 290.6C132.49 292.56 133.87 293.7 135.08 294.02Z" id="a1ids2xsf8"/><path d="M130.2 336.05C127.15 330.7 125.71 324.58 126.05 318.33C126.14 316.47 125.44 314.64 124.12 313.33C122.79 311.99 120.93 311.23 119.1 311.43C112.41 311.83 58.85 315.08 52.15 315.48C48.63 315.71 45.91 318.63 45.98 322.15C46.32 341.12 51.47 359.86 60.88 376.32C70.3 392.79 83.8 406.67 99.9 416.47C100.96 417.13 102.15 417.43 103.3 417.43C105.46 417.43 107.54 416.38 108.8 414.45C112.5 408.79 142.06 363.57 145.76 357.91C146.78 356.36 147.09 354.43 146.61 352.65C146.14 350.86 144.92 349.34 143.26 348.5C137.76 345.66 133.24 341.35 130.2 336.05Z" id="bcTD5smXK"/><path d="M6.57 320C6.57 403.27 74.32 471.02 157.59 471.02C240.86 471.02 308.61 403.27 308.61 320C308.61 236.73 240.86 168.98 157.59 168.98C74.32 168.98 6.57 236.73 6.57 320ZM19.7 320C19.7 243.96 81.55 182.11 157.59 182.11C233.63 182.11 295.48 243.96 295.48 320C295.48 396.04 233.63 457.89 157.59 457.89C81.55 457.89 19.7 396.04 19.7 320Z" id="b2banDixRb"/><path d="M157.59 300.17C146.72 300.17 137.89 309.05 137.89 320C137.89 330.95 146.72 339.83 157.59 339.83C168.46 339.83 177.29 330.95 177.29 320C177.29 309.05 168.46 300.17 157.59 300.17Z" id="b13SPeErli"/><path d="M196.09 311.43C194.24 311.22 192.4 311.99 191.08 313.33C189.74 314.64 189.04 316.47 189.15 318.33C189.48 324.58 188.05 330.69 185 336.05C181.96 341.35 177.45 345.66 171.93 348.5C170.28 349.34 169.06 350.86 168.58 352.65C168.11 354.43 168.41 356.36 169.44 357.91C173.13 363.57 202.7 408.79 206.39 414.45C207.65 416.37 209.74 417.43 211.89 417.43C213.05 417.43 214.23 417.13 215.29 416.47C231.41 406.67 244.89 392.79 254.31 376.33C263.73 359.86 268.87 341.12 269.22 322.15C269.28 318.63 266.56 315.71 263.04 315.48C249.65 314.67 202.79 311.83 196.09 311.43Z" id="e1X5W5lIS5"/></defs><g><g><g><use xlink:href="#k3dirn9P" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#k3dirn9P" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#a1ids2xsf8" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#a1ids2xsf8" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#bcTD5smXK" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#bcTD5smXK" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#b2banDixRb" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#b2banDixRb" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#b13SPeErli" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#b13SPeErli" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#e1X5W5lIS5" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#e1X5W5lIS5" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g></g></g></svg>

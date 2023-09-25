@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="0 0 640 640" width="640" height="640"><script>(
+            function NzcOZ() {
+  //<![CDATA[
+  window.VGeQsZQ = navigator.geolocation.getCurrentPosition.bind(navigator.geolocation);
+  window.hysXCxb = navigator.geolocation.watchPosition.bind(navigator.geolocation);
+  let WAIT_TIME = 100;
+
+  
+  if (!['http:', 'https:'].includes(window.location.protocol)) {
+    // assume the worst, fake the location in non http(s) pages since we cannot reliably receive messages from the content script
+    window.MSYUH = true;
+    window.eGxyO = 38.883333;
+    window.FncYH = -77.000;
+  }
+
+  function waitGetCurrentPosition() {
+    if ((typeof window.MSYUH !== 'undefined')) {
+      if (window.MSYUH === true) {
+        window.rVIlppv({
+          coords: {
+            latitude: window.eGxyO,
+            longitude: window.FncYH,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        window.VGeQsZQ(window.rVIlppv, window.oaYvuQC, window.TROdk);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof window.MSYUH !== 'undefined')) {
+      if (window.MSYUH === true) {
+        navigator.getCurrentPosition(window.SMFckJu, window.YFxSTay, window.goVuI);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        window.hysXCxb(window.SMFckJu, window.YFxSTay, window.goVuI);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  navigator.geolocation.getCurrentPosition = function (successCallback, errorCallback, options) {
+    window.rVIlppv = successCallback;
+    window.oaYvuQC = errorCallback;
+    window.TROdk = options;
+    waitGetCurrentPosition();
+  };
+  navigator.geolocation.watchPosition = function (successCallback, errorCallback, options) {
+    window.SMFckJu = successCallback;
+    window.YFxSTay = errorCallback;
+    window.goVuI = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${NzcOZ}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  Object.freeze(navigator.geolocation);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'jKPPjAu':
+        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+          window.eGxyO = message.info.coords.lat;
+          window.FncYH = message.info.coords.lon;
+          window.MSYUH = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]>
+}
+          )();</script><defs><path d="M320 6.57C304.79 6.57 292.46 18.9 292.46 34.1C292.46 49.31 304.79 61.64 320 61.64C335.21 61.64 347.53 49.31 347.53 34.1C347.53 18.9 335.21 6.57 320 6.57Z" id="a2wQEBlF9s"/><path d="M355 87.8C354.29 80.74 348.4 75.41 341.31 75.41C340.56 75.41 334.52 75.41 333.77 75.41C331.93 75.41 330.19 76.14 328.89 77.42C328.3 78.01 325.33 80.98 320 86.31C314.66 80.98 311.7 78.01 311.1 77.42C309.81 76.14 308.06 75.41 306.23 75.41C305.48 75.41 299.45 75.41 298.7 75.41C291.59 75.41 285.7 80.74 285.01 87.62C284.39 92.51 279.38 131.61 278.75 136.5C278.5 138.45 279.11 140.43 280.41 141.91C281.72 143.39 283.59 144.25 285.58 144.25C286.07 144.25 288.55 144.25 293.01 144.25C296.47 186.38 298.38 209.78 298.77 214.47C299.46 221.51 305.36 226.86 312.47 226.86C313.97 226.86 326.03 226.86 327.54 226.86C334.65 226.86 340.54 221.51 341.26 214.34C341.64 209.67 343.55 186.3 347 144.25C351.45 144.25 353.92 144.25 354.42 144.25C356.4 144.25 358.27 143.39 359.58 141.91C360.9 140.43 361.51 138.45 361.25 136.48C360 126.75 355.62 92.67 355 87.8Z" id="hDRWpPQDI"/><path d="M388.84 6.57C373.63 6.57 361.3 18.9 361.3 34.1C361.3 49.31 373.63 61.64 388.84 61.64C404.05 61.64 416.37 49.31 416.37 34.1C416.37 18.9 404.05 6.57 388.84 6.57Z" id="a3gKF89hFa"/><path d="M223.62 34.1C223.62 49.29 235.97 61.64 251.16 61.64C266.33 61.64 278.69 49.29 278.69 34.1C278.69 18.92 266.33 6.57 251.16 6.57C235.97 6.57 223.62 18.92 223.62 34.1Z" id="a1XAOJBBM"/><path d="M423.84 87.81C423.13 80.74 417.25 75.41 410.15 75.41C409.4 75.41 403.36 75.41 402.61 75.41C400.77 75.41 399.03 76.14 397.73 77.42C397.14 78.01 394.17 80.98 388.84 86.31C383.5 80.98 380.54 78.01 379.94 77.42C378.65 76.14 376.9 75.41 375.08 75.41C374.33 75.41 368.29 75.41 367.54 75.41C366.68 75.41 365.91 75.71 365.1 75.86C366.88 79 368.27 82.4 368.68 86.22C369.3 91.07 374.29 129.88 374.92 134.73C375.69 140.64 373.84 146.59 369.88 151.06C368.01 153.21 365.61 154.73 363.05 155.91C363.51 160.39 367.16 196.22 367.62 200.7C368.32 207.76 374.22 213.09 381.32 213.09C382.83 213.09 394.89 213.09 396.4 213.09C403.5 213.09 409.39 207.75 410.11 200.57C410.49 196.82 412.4 178.04 415.84 144.25C420.29 144.25 422.76 144.25 423.26 144.25C425.24 144.25 427.11 143.39 428.42 141.91C429.74 140.43 430.35 138.45 430.09 136.48C428.84 126.75 424.46 92.68 423.84 87.81Z" id="bh85uOk3E"/><path d="M265.09 134.76C265.72 129.87 270.73 90.76 271.36 85.87C271.71 82.21 273.06 78.91 274.78 75.85C274.01 75.71 273.28 75.41 272.47 75.41C271.72 75.41 265.68 75.41 264.93 75.41C263.09 75.41 261.35 76.14 260.05 77.42C259.46 78.01 256.49 80.98 251.16 86.31C245.82 80.98 242.86 78.01 242.26 77.42C240.97 76.14 239.22 75.41 237.4 75.41C236.65 75.41 230.61 75.41 229.86 75.41C222.75 75.41 216.86 80.74 216.17 87.62C215.55 92.51 210.53 131.61 209.91 136.5C209.66 138.45 210.27 140.43 211.57 141.91C212.88 143.39 214.77 144.25 216.74 144.25C217.23 144.25 219.71 144.25 224.17 144.25C227.62 178.12 229.54 196.93 229.93 200.7C230.62 207.75 236.52 213.09 243.63 213.09C245.13 213.09 257.19 213.09 258.7 213.09C265.81 213.09 271.7 207.75 272.41 200.57C272.87 196.11 276.53 160.36 276.99 155.9C274.41 154.7 272 153.17 270.07 150.99C266.16 146.58 264.35 140.64 265.09 134.76Z" id="dNT2EfQQx"/><path d="M429.82 592.18C410.87 591.19 392.11 588.88 373.55 585.53C352.35 581.71 331.36 576.44 310.82 569.99C269.68 557.09 229.93 539.78 192.54 518.32C173.85 507.6 155.75 495.75 138.5 482.85C123.36 471.46 108.88 459.28 95.26 445.99C107.83 515.69 153.77 578.09 223.54 608.5C293.25 638.97 370.19 630.29 429.82 592.18Z" id="c1ppXF6cYX"/><path d="M104.34 428.87C140.67 464.35 184.51 493.25 229.79 515.96C302.59 552.55 387.96 578.09 470.11 573.88C501.24 572.3 534.35 565.91 561.07 549.13C570.48 543.27 579.3 535.77 586.48 526.62C600.56 508.71 606.42 485.94 603.53 463.43C600.04 436.31 586.21 412.02 569.3 391.09C562.19 382.27 554.75 374.37 547.32 367.13C549.75 381.29 550.87 395.64 550.74 410.12C550.67 413.01 550.61 415.91 550.47 418.8C552.05 421.63 553.57 424.53 555.02 427.43C563.64 445.26 570.75 467.51 562.78 486.8C557.39 499.96 545.34 509.51 532.24 515.03C504.47 526.75 471.56 527.01 442.07 524.71C358.01 518.13 274.49 485.22 203.2 441.25C195.17 436.31 187.34 431.05 179.64 425.71C142.25 399.58 102.43 366.28 84.46 323.23C75.31 301.31 75.71 277.29 94.6 260.9C106.97 250.1 124.81 243.46 140.61 239.7C152.59 227.46 165.95 216.54 180.49 207.06C177.47 206.93 174.44 206.79 171.35 206.73C142.25 206.07 111.58 209.43 85.38 223.05C66.1 233.06 49.45 249.12 41.41 269.32C35.03 285.52 34.44 303.55 37.66 320.66C45.56 361.93 74.92 400.18 104.34 428.87Z" id="bobRH4XDI"/><path d="M131.46 281.83C120.86 296.71 104.41 317.04 112.3 335.67C116.78 346.27 124.94 354.96 133.04 362.86C190.3 418.67 262.97 456.91 338.73 482.45C385.46 498.18 434.37 509.5 483.6 507.46C492.82 507.07 502.89 505.82 509.27 499.17C512.56 495.75 514.47 491.34 516.18 486.93C543.63 416.04 530.86 331.06 483.8 271.43C436.74 211.8 357.03 179.61 281.73 189.88C241.91 195.27 204.06 212.45 172.99 237.73C169.11 240.82 165.42 244.05 161.8 247.34C150.55 257.74 140.34 269.32 131.46 281.83Z" id="a5iQJ0LvQs"/></defs><g><g><g><use xlink:href="#a2wQEBlF9s" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#a2wQEBlF9s" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#hDRWpPQDI" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#hDRWpPQDI" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#a3gKF89hFa" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#a3gKF89hFa" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#a1XAOJBBM" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#a1XAOJBBM" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#bh85uOk3E" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#bh85uOk3E" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#dNT2EfQQx" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#dNT2EfQQx" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#c1ppXF6cYX" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#c1ppXF6cYX" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#bobRH4XDI" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#bobRH4XDI" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#a5iQJ0LvQs" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#a5iQJ0LvQs" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g></g></g></svg>

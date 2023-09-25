@@ -1,0 +1,11 @@
+[config]
+Name = microbiallife
+Texture = microbiallife.png
+GUISound = DM4_NewlyIndustrializedStatus.wav
+OnImplement = CreateGrudge(_All_,0.025,0.8);CreateGrudge(microbiallife,-1.5,1.0);CreateGrudge(Religious_freq,-0.08,1.0);
+
+[influences]
+0 = _random_,0.2,0.7
+1 = aliensearch,0+(0.4*x),5
+
+

@@ -1,0 +1,16 @@
+[dilemma]
+name=MiddleEastTerror
+
+[influences]
+0 = _random_,0,0.25
+1 = MiddleEastChaos,0.55+(0*x)
+2 = IntelligenceServices,-0.1+(0.15*x)
+
+[option0]
+OnImplement = CreateGrudge(MiddleEastChaos,-0.12,0.95);CreateGrudge(ForeignRelations,-0.1,0.9);CreateGrudge(Patriot,0.15,0.9);CreateGrudge(Liberal,-0.05,0.9);CreateGrudge(_percept_strength,0.1,0.95);
+
+[option1]
+OnImplement = CreateGrudge(MiddleEastChaos,-0.06,0.95);CreateGrudge(ForeignRelations,-0.05,0.9);CreateGrudge(Patriot,-0.08,0.9);CreateGrudge(Liberal,-0.03,0.9);
+
+[option2]
+OnImplement = CreateGrudge(MiddleEastChaos,-0.03,0.95);CreateGrudge(ForeignRelations,0.06,0.9);CreateGrudge(Patriot,-0.15,0.9);CreateGrudge(Liberal,0.06,0.9);CreateGrudge(_percept_strength,-0.1,0.95);

@@ -1,0 +1,1 @@
+CreateGrudge(USA,_hidden_,Patriot_freq,0.045,1,0);

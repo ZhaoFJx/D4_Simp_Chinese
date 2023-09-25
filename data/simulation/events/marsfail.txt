@@ -1,0 +1,12 @@
+[config]
+Name = marsfail
+Texture = marsfail.png
+GUISound = DM4_Grave Move Protests.wav
+OnImplement = CreateGrudge(Patriot,-0.17,0.85);CreateGrudge(_All_,-0.12,0.8);CreateGrudge(marslanding,-1.0,0.85);CreateGrudge(marsfail,-1.0,0.85);CreateGrudge(marslanding,0.05,1.0);CreateGrudge(marsfail,-0.05,1.0);
+
+[influences]
+0 = _random_,0.15,0.32
+1 = MarsProgram,0+(0.85*x)
+2 = shuttleresearch,0-(0.1*x)
+
+

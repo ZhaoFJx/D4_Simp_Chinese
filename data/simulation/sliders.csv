@@ -1,0 +1,11 @@
+#,churchtax,PERCENTAGE,0,50
+#,armsexporting,DISCRETE,0,
+#,nato,DISCRETE,0,
+#,elderlyint,DISCRETE,0,
+#,immigrationcops,DISCRETE,0,
+#,secret,DISCRETE,0,
+#,aliens,DISCRETE,0,
+#,moonbased,DISCRETE,0,
+#,spacecop,DISCRETE,0,
+#,spacescishare,DISCRETE,0,
+#,banspace,DISCRETE,0,

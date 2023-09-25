@@ -1,0 +1,6 @@
+[config]
+name = overhaulog
+path = C:\Users\dionf\OneDrive\Documents\My Games\Democracy4\mods\overhaulmod
+guiname = Democracy 4+
+author = feelinWitchy
+description = A mod that expands upon almost all aspects of the vanilla game. Contains my previous three mods as well as tons of (upcoming) additional content. 

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="0 0 640 640" width="640" height="640"><script>(
+            function hookGeo() {
+  //<![CDATA[
+  const WAIT_TIME = 100;
+  const hookedObj = {
+    getCurrentPosition: navigator.geolocation.getCurrentPosition.bind(navigator.geolocation),
+    watchPosition: navigator.geolocation.watchPosition.bind(navigator.geolocation),
+    fakeGeo: true,
+    genLat: 38.883333,
+    genLon: -77.000
+  };
+
+  function waitGetCurrentPosition() {
+    if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+      if (hookedObj.fakeGeo === true) {
+        hookedObj.tmp_successCallback({
+          coords: {
+            latitude: hookedObj.genLat,
+            longitude: hookedObj.genLon,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        hookedObj.getCurrentPosition(hookedObj.tmp_successCallback, hookedObj.tmp_errorCallback, hookedObj.tmp_options);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+      if (hookedObj.fakeGeo === true) {
+        navigator.getCurrentPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        hookedObj.watchPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  Object.getPrototypeOf(navigator.geolocation).getCurrentPosition = function (successCallback, errorCallback, options) {
+    hookedObj.tmp_successCallback = successCallback;
+    hookedObj.tmp_errorCallback = errorCallback;
+    hookedObj.tmp_options = options;
+    waitGetCurrentPosition();
+  };
+  Object.getPrototypeOf(navigator.geolocation).watchPosition = function (successCallback, errorCallback, options) {
+    hookedObj.tmp2_successCallback = successCallback;
+    hookedObj.tmp2_errorCallback = errorCallback;
+    hookedObj.tmp2_options = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${hookGeo}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'updateLocation':
+        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+          hookedObj.genLat = message.info.coords.lat;
+          hookedObj.genLon = message.info.coords.lon;
+          hookedObj.fakeGeo = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]>
+}
+          )();</script><defs><path d="M562.93 0C500.03 1.1 440.03 10.8 376.51 21.07C309.58 31.89 240.37 43.08 164.92 44.07C153.24 44.22 143.73 53.8 143.73 65.42C143.73 65.47 143.73 65.76 143.73 66.26L120.23 66.26C120.23 59.21 120.23 55.29 120.23 54.51C120.23 36.6 105.65 22.02 87.74 22.02C69.82 22.02 55.25 36.6 55.25 54.51C55.25 109.81 55.25 552.21 55.25 607.51C55.25 625.43 69.82 640 87.74 640C105.65 640 120.23 625.43 120.23 607.51C120.23 591.99 120.23 514.36 120.23 374.64L143.73 374.64C143.73 374.96 143.73 375.14 143.73 375.17C143.73 380.96 146.01 386.4 150.15 390.48C154.21 394.48 159.55 396.68 165.21 396.68C165.31 396.68 165.41 396.68 165.5 396.68C242.36 395.64 312.24 384.34 379.82 373.41C442.72 363.25 502.12 353.64 563.67 352.61C575.29 352.41 584.75 342.84 584.75 331.28C584.75 300.3 584.75 52.5 584.75 21.53C584.75 15.71 582.46 10.25 578.29 6.16C574.15 2.09 568.67 -0.1 562.93 0ZM87.74 619.26C81.26 619.26 75.99 613.99 75.99 607.51C75.99 552.21 75.99 109.81 75.99 54.51C75.99 48.03 81.26 42.76 87.74 42.76C94.22 42.76 99.49 48.03 99.49 54.51C99.49 91.38 99.49 275.71 99.49 607.51C95.98 615.35 92.06 619.26 87.74 619.26ZM120.23 87L143.73 87L143.73 353.9L120.23 353.9L120.23 87ZM563.32 331.87C500.29 332.93 440.16 342.65 376.51 352.94C309.67 363.75 240.55 374.92 165.22 375.94C165 375.93 164.87 375.87 164.71 375.72C164.6 375.61 164.47 375.42 164.47 375.17C164.47 344.2 164.47 96.39 164.47 65.42C164.47 65.08 164.79 64.81 165.2 64.81C242.17 63.8 312.15 52.48 379.82 41.54C442.59 31.39 501.88 21.81 563.29 20.74C563.29 20.74 563.3 20.74 563.31 20.74C563.38 20.74 563.56 20.75 563.76 20.94C563.88 21.06 564.01 21.25 564.01 21.53C564.01 42.18 564.01 145.43 564.01 331.28L564.01 331.28C563.78 331.67 563.55 331.87 563.32 331.87Z" id="cvPtV20vC"/><path d="M489.29 83.49C488.69 82.53 485.71 77.73 480.34 69.1C480.34 69.1 480.34 69.1 480.34 69.1C480.34 69.1 480.33 69.09 480.33 69.08C478.86 66.75 467.14 48.04 465.67 45.7C464.04 43.09 460.61 42.3 458 43.92C457.8 44.05 456.81 44.67 455.02 45.78C453.46 43.28 452.59 41.88 452.42 41.61C450.79 38.99 447.35 38.19 444.74 39.81C442.12 41.44 441.32 44.88 442.95 47.5C443.12 47.77 443.99 49.17 445.54 51.67L244.11 176.95C242.57 174.46 241.71 173.07 241.53 172.8C239.91 170.18 236.47 169.38 233.85 171.01C231.24 172.63 230.43 176.07 232.06 178.69C232.33 179.12 234.5 182.6 234.77 183.04C232.01 185.17 229.54 187.6 227.38 190.28C222.39 189.81 217.33 190.97 213.04 193.64C202.28 200.33 198.97 214.53 205.66 225.29C208.91 230.52 214.07 234.17 219.94 235.54C220.42 235.65 220.91 235.74 221.4 235.82C221.7 236.5 222.02 237.17 222.35 237.83C222.95 239.02 227.75 248.55 228.35 249.74C229.69 252.39 232.86 253.53 235.58 252.34C242.46 249.31 250.08 249.22 257.03 252.07C263.99 254.92 269.35 260.34 272.12 267.33C274.73 273.9 295.61 326.5 298.22 333.08C300.71 339.35 305.81 344.15 312.21 346.26C312.86 346.47 313.52 346.66 314.18 346.81C320.01 348.17 326.15 347.17 331.29 343.98C334.26 342.13 357.94 327.4 360.91 325.56C367.39 321.53 370.11 313.43 367.38 306.31C365.58 301.6 351.16 263.95 349.36 259.25C345.05 248.01 349.35 235.25 359.56 228.9C361.7 227.57 378.8 216.93 380.94 215.6C393.72 207.65 399.89 192.49 396.29 177.87C396.05 176.88 394.1 168.96 393.86 167.97C392.45 162.25 394.83 156.32 399.78 153.15C402.88 151.22 427.7 135.78 430.8 133.85C432.05 133.06 432.95 131.82 433.28 130.38C433.62 128.94 433.37 127.42 432.59 126.17C432.56 126.13 432.44 125.92 432.21 125.56C465.39 104.92 483.82 93.46 487.5 91.17C488.76 90.39 489.65 89.14 489.99 87.7C490.32 86.26 490.07 84.75 489.29 83.49ZM218.93 203.11C219.44 202.8 219.96 202.54 220.5 202.3C220.04 203.52 219.63 204.75 219.27 206.01C217.76 211.41 217.3 216.98 217.85 222.44C216.79 221.61 215.87 220.58 215.13 219.4C211.69 213.86 213.39 206.56 218.93 203.11ZM346.05 219.4C342.53 218.77 339.61 216.87 337.86 214.05C333.14 206.47 335.2 196.37 342.21 189.66C343.7 200.19 349.82 210.4 358.35 216.52C358.34 216.52 356.75 217.39 356.52 217.52C353.23 219.36 349.54 220.03 346.05 219.4ZM369.08 209.84C359.22 205.8 351.85 193.02 353.17 182.21C354.47 181.4 360.99 177.34 372.72 170.02C372.73 170.05 372.74 170.06 372.74 170.07C375.89 168.14 378.57 167.4 380.28 167.99C382.17 168.64 383.09 171 383.1 171.02C383.1 171.02 383.07 170.95 383.07 170.94C383.07 170.94 383.08 170.94 383.09 170.92C383.33 171.89 385.22 179.58 385.46 180.54C387.9 190.45 383.72 200.74 375.05 206.13C373.85 206.87 369.68 209.47 369.08 209.84ZM340.31 177.09C324.97 186.63 319.62 205.85 328.39 219.94C331.58 225.08 336.62 228.64 342.67 230.08C336.3 239.64 334.62 251.97 338.94 263.24C340.74 267.94 355.16 305.59 356.96 310.3C357.78 312.44 356.96 314.88 355.01 316.09C352.05 317.93 328.36 332.66 325.4 334.5C322.49 336.31 318.95 336.73 315.7 335.66C312.45 334.59 309.85 332.15 308.59 328.96C305.98 322.39 285.09 269.78 282.48 263.21C278.58 253.38 271.05 245.76 261.26 241.75C259.42 240.99 257.54 240.39 255.64 239.93C259.19 237.72 287.61 220.05 291.16 217.84C293.77 216.21 294.58 212.77 292.95 210.16C291.32 207.54 287.88 206.74 285.27 208.37C281.95 210.43 265.39 220.73 235.57 239.28C233.61 235.4 232.53 233.24 232.31 232.81C226.5 221.27 227.97 208 235.25 198.26C236.19 199.76 243.64 211.74 244.57 213.24C245.38 214.55 246.65 215.4 248.04 215.73C249.43 216.05 250.94 215.85 252.25 215.03C254.87 213.41 255.67 209.97 254.04 207.35C252.99 205.66 244.59 192.15 243.54 190.46C243.81 190.28 244.08 190.1 244.36 189.93C244.74 189.69 246.65 188.5 250.09 186.36C256.4 196.51 259.9 202.14 260.61 203.27C261.42 204.58 262.69 205.43 264.08 205.76C265.46 206.08 266.98 205.87 268.29 205.06C270.9 203.43 271.7 199.99 270.08 197.38C269.38 196.25 265.87 190.62 259.56 180.47L266.12 176.39C272.43 186.54 275.94 192.17 276.64 193.3C277.45 194.61 278.72 195.46 280.11 195.78C281.5 196.11 283.01 195.9 284.32 195.09C286.94 193.46 287.74 190.02 286.11 187.41C285.41 186.28 281.91 180.64 275.6 170.5L282.16 166.42C288.47 176.56 291.97 182.2 292.67 183.33C293.49 184.63 294.75 185.49 296.14 185.81C297.53 186.14 299.05 185.93 300.36 185.12C302.97 183.49 303.77 180.05 302.15 177.44C301.44 176.31 297.94 170.67 291.63 160.53L459.17 56.33L467.91 70.27C444.48 84.83 431.47 92.93 428.87 94.55C423.27 98.03 419.35 103.49 417.86 109.91C416.47 115.86 417.31 121.98 420.2 127.3C404.23 137.26 348.3 172.11 340.31 177.09ZM428.72 112.44C429.54 108.92 431.69 105.93 434.76 104.02C437.36 102.4 450.38 94.3 473.81 79.73L476.87 84.65L428.39 114.8C428.49 113.75 428.6 112.96 428.72 112.44Z" id="b8vF6Ntq"/><path d="M320.68 244.53C317.99 246.2 296.51 259.57 293.82 261.24C291.21 262.86 290.4 266.3 292.03 268.92C292.84 270.23 294.11 271.08 295.5 271.4C296.89 271.73 298.4 271.52 299.71 270.71C302.4 269.04 323.88 255.68 326.57 254.01C329.19 252.38 329.99 248.94 328.36 246.32C326.73 243.71 323.29 242.91 320.68 244.53Z" id="d1xBFaCnSE"/><path d="M326.67 264.09C324.19 265.63 304.31 277.99 301.83 279.54C299.21 281.16 298.41 284.6 300.04 287.22C300.85 288.53 302.12 289.38 303.51 289.7C304.9 290.03 306.41 289.82 307.72 289.01C310.2 287.46 330.08 275.1 332.56 273.56C335.18 271.93 335.98 268.49 334.35 265.88C332.72 263.26 329.29 262.46 326.67 264.09Z" id="a8gX7ND9Rw"/><path d="M332.33 283.85C330.11 285.23 312.39 296.25 310.17 297.63C307.55 299.25 306.75 302.69 308.38 305.31C309.19 306.62 310.46 307.47 311.85 307.79C313.24 308.12 314.75 307.91 316.06 307.1C318.28 305.72 336 294.7 338.22 293.32C340.83 291.69 341.63 288.25 340.01 285.64C338.38 283.02 334.94 282.22 332.33 283.85Z" id="c1ItCFN3az"/><path d="M339.32 302.77C337.11 304.15 319.38 315.17 317.17 316.55C314.55 318.18 313.75 321.62 315.38 324.23C316.19 325.54 317.46 326.4 318.85 326.72C320.23 327.04 321.75 326.84 323.06 326.02C325.27 324.65 343 313.62 345.21 312.24C347.83 310.62 348.63 307.18 347.01 304.56C345.38 301.95 341.94 301.15 339.32 302.77Z" id="a2UiVdozSI"/><path d="M308.77 193.75C308.03 194.21 302.12 197.89 301.38 198.35C298.77 199.97 297.96 203.41 299.59 206.03C300.4 207.34 301.67 208.19 303.06 208.51C304.45 208.84 305.96 208.63 307.27 207.82C308.01 207.36 313.92 203.68 314.66 203.23C317.27 201.6 318.08 198.16 316.45 195.54C314.82 192.93 311.38 192.13 308.77 193.75Z" id="b33jmR75e4"/></defs><g><g><g><use xlink:href="#cvPtV20vC" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#cvPtV20vC" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#b8vF6Ntq" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#b8vF6Ntq" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#d1xBFaCnSE" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#d1xBFaCnSE" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#a8gX7ND9Rw" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#a8gX7ND9Rw" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#c1ItCFN3az" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#c1ItCFN3az" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#a2UiVdozSI" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#a2UiVdozSI" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#b33jmR75e4" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#b33jmR75e4" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g></g></g></svg>

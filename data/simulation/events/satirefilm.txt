@@ -1,0 +1,10 @@
+[config]
+Name = satirefilm
+Texture = satirefilm.png
+GUISound = DM4_Social Stupidity.wav
+OnImplement = CreateGrudge(_percept_strength,-0.08,0.83);CreateGrudge(_percept_compassion,-0.08,0.83);CreateGrudge(_percept_trust,-0.08,0.83);
+
+[influences]
+0 = _random_,0.35,0.9
+1 = GeneralMediaCensorship,-0.1-(1.0*x)
+

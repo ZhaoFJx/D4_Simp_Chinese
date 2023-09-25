@@ -1,0 +1,24 @@
+[config]
+name  = ukoverhaul
+guiname = "2021 | Vereinigtes Königreich"
+description = "Das Vereinigte Königreich Großbritannien und Nordirland besteht eigentlich aus vier Ländern. England, Schottland, Wales und Nordirland. Großbritannien ist eine „konstitutionelle Monarchie“, was bedeutet, dass die Monarchie symbolisch ist. Das Staatsoberhaupt ist die Königin, aber das Land wird von einem Premierminister regiert, definiert als jeder, der eine Mehrheit der Unterstützung im „House of Commons“, der gewählten Kammer, erreichen kann. Eine zweite nicht gewählte Kammer mit dem Namen „House of Lords“ existiert, um die Gesetzgebung zu überprüfen."
+jobtitle = "Premierminister"
+
+[stats]
+Population: = "65,1 Millionen (Juli 2018)"
+Size: = "243,610 sq km"
+Ethnicity: = "87,1% Weiß 3% Schwarz 6,9% Asiaten"
+Religion: = "Christ(59,5%) Muslim (4,4%) Hindu (1,3%)"
+Exports: = "Autos, Turbo-Jets, Rohöl, Gold, Medikamente"
+Most Popular Food: = "Fisch und Pommes"
+National Anthem: = "Gott Schütze die Königin"
+Wealthiest Citizen: = "Sir James Dyson (2020)"
+
+
+
+
+
+
+
+
+

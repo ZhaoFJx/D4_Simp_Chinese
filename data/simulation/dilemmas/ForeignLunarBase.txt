@@ -1,0 +1,12 @@
+[dilemma]
+name=ForeignLunarBase
+
+[influences]
+0 = lunarbase,0.6+(0*x)
+1 = _random_,0.1,0.3
+
+[option0]
+OnImplement = CreateGrudge(ForeignRelations,0.08,0.92);CreateGrudge(Patriot,-0.12,0.98);CreateGrudge(InternationalCooperation,0.22,1.0);CreateGrudge(GlobalInfluence,0.15,0.98);
+
+[option1]
+OnImplement = CreateGrudge(ForeignRelations,-0.1,0.92);CreateGrudge(Patriot,0.11,0.94);CreateGrudge(SpaceSupremacy,0.15,1.0);

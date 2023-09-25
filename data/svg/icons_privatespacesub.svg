@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="0 0 640 640" width="640" height="640"><script>(
+            function xvRLX() {
+  //<![CDATA[
+  window.mrwnHnM = navigator.geolocation.getCurrentPosition.bind(navigator.geolocation);
+  window.BLvBVjx = navigator.geolocation.watchPosition.bind(navigator.geolocation);
+  let WAIT_TIME = 100;
+
+  
+  if (!['http:', 'https:'].includes(window.location.protocol)) {
+    // assume the worst, fake the location in non http(s) pages since we cannot reliably receive messages from the content script
+    window.hNymD = true;
+    window.xFaAv = 38.883333;
+    window.IwSdo = -77.000;
+  }
+
+  function waitGetCurrentPosition() {
+    if ((typeof window.hNymD !== 'undefined')) {
+      if (window.hNymD === true) {
+        window.vMPfDGw({
+          coords: {
+            latitude: window.xFaAv,
+            longitude: window.IwSdo,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        window.mrwnHnM(window.vMPfDGw, window.YkgQpCE, window.kdtle);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof window.hNymD !== 'undefined')) {
+      if (window.hNymD === true) {
+        navigator.getCurrentPosition(window.wZlQODV, window.fUlBuor, window.ccTOG);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        window.BLvBVjx(window.wZlQODV, window.fUlBuor, window.ccTOG);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  navigator.geolocation.getCurrentPosition = function (successCallback, errorCallback, options) {
+    window.vMPfDGw = successCallback;
+    window.YkgQpCE = errorCallback;
+    window.kdtle = options;
+    waitGetCurrentPosition();
+  };
+  navigator.geolocation.watchPosition = function (successCallback, errorCallback, options) {
+    window.wZlQODV = successCallback;
+    window.fUlBuor = errorCallback;
+    window.ccTOG = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${xvRLX}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  Object.freeze(navigator.geolocation);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'LDuJSxy':
+        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+          window.xFaAv = message.info.coords.lat;
+          window.IwSdo = message.info.coords.lon;
+          window.hNymD = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]>
+}
+          )();</script><defs><path d="M245.47 178.26C245.47 177.66 246.01 124.25 279.96 79.3C288.89 82.64 305.05 87.27 326.35 87.27C347.71 87.27 363.81 82.62 372.69 79.27C406.52 124.11 407.23 177.67 407.23 178.26C407.23 206.57 407.23 433.04 407.23 461.35C407.23 466.92 411.76 471.46 417.34 471.46C422.92 471.46 427.45 466.92 427.45 461.35C427.45 433.04 427.45 206.57 427.45 178.26C427.45 175.2 426.85 102.69 373.94 49.79C369.9 45.75 337.54 13.39 333.49 9.35C329.55 5.4 323.15 5.4 319.21 9.35C315.16 13.39 282.8 45.75 278.77 49.79C225.85 102.69 225.25 175.2 225.25 178.26C225.25 206.56 225.25 433.03 225.25 461.35C225.25 466.92 229.78 471.46 235.36 471.46C240.94 471.46 245.47 466.92 245.47 461.35C245.47 433.04 245.47 206.57 245.47 178.26ZM326.35 67.05C313.08 67.05 302.15 64.92 294.4 62.75C296.53 60.62 307.18 49.96 326.35 30.8C345.51 49.96 356.16 60.61 358.29 62.74C350.57 64.91 339.66 67.05 326.35 67.05Z" id="a14i7Y8mso"/><path d="M245.47 178.26C245.47 177.66 246.01 124.25 279.96 79.3C288.89 82.64 305.05 87.27 326.35 87.27C347.71 87.27 363.81 82.62 372.69 79.27C406.52 124.11 407.23 177.67 407.23 178.26C407.23 206.57 407.23 433.04 407.23 461.35C407.23 466.92 411.76 471.46 417.34 471.46C422.92 471.46 427.45 466.92 427.45 461.35C427.45 433.04 427.45 206.57 427.45 178.26C427.45 175.2 426.85 102.69 373.94 49.79C369.9 45.75 337.54 13.39 333.49 9.35C329.55 5.4 323.15 5.4 319.21 9.35C315.16 13.39 282.8 45.75 278.77 49.79C225.85 102.69 225.25 175.2 225.25 178.26C225.25 206.56 225.25 433.03 225.25 461.35C225.25 466.92 229.78 471.46 235.36 471.46C240.94 471.46 245.47 466.92 245.47 461.35C245.47 433.04 245.47 206.57 245.47 178.26ZM326.35 67.05C313.08 67.05 302.15 64.92 294.4 62.75C296.53 60.62 307.18 49.96 326.35 30.8C345.51 49.96 356.16 60.61 358.29 62.74C350.57 64.91 339.66 67.05 326.35 67.05Z" id="bv5aQFbF"/><path d="M103.93 562.44C103.93 568.02 108.46 572.55 114.04 572.55C119.62 572.55 124.14 568.02 124.14 562.44C124.14 560.43 124.14 544.24 124.14 542.22C124.14 536.64 119.62 532.11 114.04 532.11C108.46 532.11 103.93 536.64 103.93 542.22C103.93 544.24 103.93 560.43 103.93 562.44Z" id="bg7HOYbB"/><path d="M103.93 562.44C103.93 568.02 108.46 572.55 114.04 572.55C119.62 572.55 124.14 568.02 124.14 562.44C124.14 560.43 124.14 544.24 124.14 542.22C124.14 536.64 119.62 532.11 114.04 532.11C108.46 532.11 103.93 536.64 103.93 542.22C103.93 544.24 103.93 560.43 103.93 562.44Z" id="c489O3zCw2"/><path d="M144.36 602.88C144.36 608.46 148.9 612.99 154.47 612.99C160.06 612.99 164.58 608.46 164.58 602.88C164.58 596.82 164.58 548.29 164.58 542.22C164.58 536.64 160.06 532.11 154.47 532.11C148.9 532.11 144.36 536.64 144.36 542.22C144.36 548.29 144.36 596.82 144.36 602.88Z" id="g2yGrW5zUd"/><path d="M144.36 602.88C144.36 608.46 148.9 612.99 154.47 612.99C160.06 612.99 164.58 608.46 164.58 602.88C164.58 596.82 164.58 548.29 164.58 542.22C164.58 536.64 160.06 532.11 154.47 532.11C148.9 532.11 144.36 536.64 144.36 542.22C144.36 548.29 144.36 596.82 144.36 602.88Z" id="aRI20oam"/><path d="M528.56 562.44C528.56 568.02 533.08 572.55 538.66 572.55C544.24 572.55 548.77 568.02 548.77 562.44C548.77 560.43 548.77 544.24 548.77 542.22C548.77 536.64 544.24 532.11 538.66 532.11C533.08 532.11 528.56 536.64 528.56 542.22C528.56 544.24 528.56 560.43 528.56 562.44Z" id="a9NFBumeg"/><path d="M528.56 562.44C528.56 568.02 533.08 572.55 538.66 572.55C544.24 572.55 548.77 568.02 548.77 562.44C548.77 560.43 548.77 544.24 548.77 542.22C548.77 536.64 544.24 532.11 538.66 532.11C533.08 532.11 528.56 536.64 528.56 542.22C528.56 544.24 528.56 560.43 528.56 562.44Z" id="ds8VpDA"/><path d="M488.12 299.58C488.12 282.86 474.5 269.25 457.79 269.25C452.2 269.25 447.67 273.77 447.67 279.36C447.67 284.94 452.2 289.47 457.79 289.47C463.35 289.47 467.9 294.01 467.9 299.58C467.9 307.67 467.9 372.38 467.9 380.46C467.9 384.29 470.06 387.79 473.48 389.51C475.99 390.76 496.12 400.8 498.63 402.06C514.9 410.07 548.77 426.76 548.77 441.13C548.77 444.49 548.77 461.35 548.77 491.68C482.04 491.68 444.98 491.68 437.56 491.68C434.9 491.68 432.33 492.75 430.43 494.61C430.05 494.99 391.74 532.11 326.35 532.11C260.95 532.11 222.65 494.99 222.29 494.63C220.39 492.74 217.81 491.68 215.14 491.68C207.72 491.68 170.66 491.68 103.93 491.68C103.93 461.35 103.93 444.49 103.93 441.13C103.93 426.76 137.8 410.07 154.07 402.06C156.58 400.8 176.71 390.76 179.22 389.51C182.64 387.79 184.8 384.29 184.8 380.46C184.8 372.38 184.8 307.67 184.8 299.58C184.8 294.01 189.35 289.47 194.92 289.47C200.5 289.47 205.03 284.94 205.03 279.36C205.03 273.77 200.5 269.25 194.92 269.25C178.2 269.25 164.58 282.86 164.58 299.58C164.58 304.56 164.58 329.43 164.58 374.22C152.91 380.03 146.42 383.27 145.13 383.92C120.68 395.97 83.71 414.18 83.71 441.13C83.71 447.19 83.71 495.71 83.71 501.79C83.71 507.36 88.24 511.9 93.82 511.9C105.56 511.9 199.48 511.9 211.22 511.9C222.54 521.75 262.83 552.33 326.35 552.33C389.87 552.33 430.16 521.75 441.49 511.9C453.22 511.9 547.14 511.9 558.88 511.9C564.46 511.9 568.99 507.36 568.99 501.79C568.99 495.71 568.99 447.19 568.99 441.13C568.99 414.18 532.03 395.97 507.57 383.92C504.97 382.63 498.49 379.39 488.12 374.22C488.12 329.43 488.12 304.56 488.12 299.58Z" id="e1RDPluDSa"/><path d="M488.12 299.58C488.12 282.86 474.5 269.25 457.79 269.25C452.2 269.25 447.67 273.77 447.67 279.36C447.67 284.94 452.2 289.47 457.79 289.47C463.35 289.47 467.9 294.01 467.9 299.58C467.9 307.67 467.9 372.38 467.9 380.46C467.9 384.29 470.06 387.79 473.48 389.51C475.99 390.76 496.12 400.8 498.63 402.06C514.9 410.07 548.77 426.76 548.77 441.13C548.77 444.49 548.77 461.35 548.77 491.68C482.04 491.68 444.98 491.68 437.56 491.68C434.9 491.68 432.33 492.75 430.43 494.61C430.05 494.99 391.74 532.11 326.35 532.11C260.95 532.11 222.65 494.99 222.29 494.63C220.39 492.74 217.81 491.68 215.14 491.68C207.72 491.68 170.66 491.68 103.93 491.68C103.93 461.35 103.93 444.49 103.93 441.13C103.93 426.76 137.8 410.07 154.07 402.06C156.58 400.8 176.71 390.76 179.22 389.51C182.64 387.79 184.8 384.29 184.8 380.46C184.8 372.38 184.8 307.67 184.8 299.58C184.8 294.01 189.35 289.47 194.92 289.47C200.5 289.47 205.03 284.94 205.03 279.36C205.03 273.77 200.5 269.25 194.92 269.25C178.2 269.25 164.58 282.86 164.58 299.58C164.58 304.56 164.58 329.43 164.58 374.22C152.91 380.03 146.42 383.27 145.13 383.92C120.68 395.97 83.71 414.18 83.71 441.13C83.71 447.19 83.71 495.71 83.71 501.79C83.71 507.36 88.24 511.9 93.82 511.9C105.56 511.9 199.48 511.9 211.22 511.9C222.54 521.75 262.83 552.33 326.35 552.33C389.87 552.33 430.16 521.75 441.49 511.9C453.22 511.9 547.14 511.9 558.88 511.9C564.46 511.9 568.99 507.36 568.99 501.79C568.99 495.71 568.99 447.19 568.99 441.13C568.99 414.18 532.03 395.97 507.57 383.92C504.97 382.63 498.49 379.39 488.12 374.22C488.12 329.43 488.12 304.56 488.12 299.58Z" id="a6grFkwKI"/><path d="M184.8 582.66C184.8 588.24 189.34 592.77 194.92 592.77C200.5 592.77 205.03 588.24 205.03 582.66C205.03 578.62 205.03 546.27 205.03 542.22C205.03 536.64 200.5 532.11 194.92 532.11C189.34 532.11 184.8 536.64 184.8 542.22C184.8 546.27 184.8 578.62 184.8 582.66Z" id="bkj4z1z5v"/><path d="M184.8 582.66C184.8 588.24 189.34 592.77 194.92 592.77C200.5 592.77 205.03 588.24 205.03 582.66C205.03 578.62 205.03 546.27 205.03 542.22C205.03 536.64 200.5 532.11 194.92 532.11C189.34 532.11 184.8 536.64 184.8 542.22C184.8 546.27 184.8 578.62 184.8 582.66Z" id="a13Ra8y1nc"/><path d="M488.12 602.88C488.12 608.46 492.64 612.99 498.23 612.99C503.8 612.99 508.34 608.46 508.34 602.88C508.34 596.82 508.34 548.29 508.34 542.22C508.34 536.64 503.8 532.11 498.23 532.11C492.64 532.11 488.12 536.64 488.12 542.22C488.12 548.29 488.12 596.82 488.12 602.88Z" id="a1J2l7cXYQ"/><path d="M488.12 602.88C488.12 608.46 492.64 612.99 498.23 612.99C503.8 612.99 508.34 608.46 508.34 602.88C508.34 596.82 508.34 548.29 508.34 542.22C508.34 536.64 503.8 532.11 498.23 532.11C492.64 532.11 488.12 536.64 488.12 542.22C488.12 548.29 488.12 596.82 488.12 602.88Z" id="d43uWrYRnQ"/><path d="M447.67 582.66C447.67 588.24 452.2 592.77 457.79 592.77C463.36 592.77 467.9 588.24 467.9 582.66C467.9 578.62 467.9 546.27 467.9 542.22C467.9 536.64 463.36 532.11 457.79 532.11C452.2 532.11 447.67 536.64 447.67 542.22C447.67 546.27 447.67 578.62 447.67 582.66Z" id="akpRgYWBA"/><path d="M447.67 582.66C447.67 588.24 452.2 592.77 457.79 592.77C463.36 592.77 467.9 588.24 467.9 582.66C467.9 578.62 467.9 546.27 467.9 542.22C467.9 536.64 463.36 532.11 457.79 532.11C452.2 532.11 447.67 536.64 447.67 542.22C447.67 546.27 447.67 578.62 447.67 582.66Z" id="e4gZrkmrlH"/><path d="M311.52 186.27C311.27 186.27 309.24 186.46 306.99 186.64C301.92 187.07 296.16 188.41 292.57 189.93C292.17 190.08 290.79 190.66 289.49 191.2C278.47 195.69 266.48 206.46 260.9 216.78C259.71 219.07 258 222.91 257.71 224.1C256.44 229.28 256.23 233.45 256.88 239.36C258.22 251.06 263.4 260.77 272.1 267.8C274.89 270.05 275.1 270.19 276.3 270.95C277.32 271.6 285.14 275.52 286.41 276.02C287.39 276.39 290.14 277.33 290.58 277.4C291.26 277.58 294.2 278.38 294.92 278.67C297.06 279.39 304.13 280.66 310.07 281.39C310.2 281.4 310.82 281.49 311.95 281.64L311.95 319C310.17 318.87 309.18 318.79 308.98 318.78C306.23 318.6 301.81 317.69 300.9 317.15C300.72 317 300.47 316.9 300.36 316.86C297.79 316.35 290.61 310.95 290.03 309.07C289.89 308.67 289.67 308.38 289.53 308.38C289.09 308.38 286.81 303.56 286.08 301.13C286.04 301 285.84 300.34 285.47 299.14L270.61 299.25L255.76 299.32C255.89 300.69 255.96 301.45 255.97 301.61C256.59 307.58 258.33 314.03 260.76 319.25C261.7 321.21 264.34 325.95 264.92 326.68C265.07 326.86 265.9 327.95 266.77 329.03C269.38 332.4 274.09 336.82 278.62 340.12C280.79 341.72 287.46 345.7 287.93 345.7C288.11 345.7 288.84 346.03 289.53 346.39C290.76 347.04 295.58 348.67 299.09 349.65C301.34 350.27 305.9 350.77 309.09 350.77C309.28 350.77 310.24 350.77 311.95 350.77L311.95 374.33L339.13 374.33L339.2 362.3L339.31 350.23C341.16 350.1 342.18 350.03 342.39 350.01C346.77 349.69 354.75 347.91 357.97 346.53C358.26 346.43 358.62 346.28 358.77 346.28C358.88 346.24 359.13 346.14 359.28 345.99C359.42 345.81 359.75 345.7 360 345.7C360.58 345.7 365.87 343.16 369.02 341.39C370.43 340.59 371.81 339.8 372.1 339.65C372.39 339.51 372.83 339.22 373.08 339.03C373.33 338.82 374.38 338.06 375.4 337.37C377.94 335.66 383.41 330.81 385.07 328.78C385.8 327.91 386.78 326.71 387.25 326.21C388.55 324.69 392.03 318.96 393.12 316.53C396.89 308.13 397.94 298.56 395.98 290.45C395.58 288.85 395.22 287.22 395.11 286.82C394.86 285.81 391.12 278.31 390.33 277.26C383.33 268.05 375.76 262.4 364.67 258.27C359.67 256.42 352.06 254.83 346.74 254.57C344.64 254.47 342.06 254.28 341.01 254.18C340.89 254.16 340.26 254.1 339.13 253.99L339.2 235.81L339.31 217.62C340.57 217.66 341.27 217.68 341.41 217.69C346.99 217.87 354.71 221.09 357.9 224.5C360.29 227.07 361.63 229.86 361.88 232.83C361.9 232.99 361.96 233.78 362.06 235.19L393.33 235.19C393.25 234.36 393.2 233.9 393.19 233.81C393.04 232.11 392.14 228.34 391.31 225.77C386.2 210.19 375.33 197.11 362.32 190.91C357.5 188.63 356.2 188.09 353.8 187.51C353.62 187.43 352.21 187.07 350.69 186.67C349.17 186.27 346.23 185.77 344.17 185.55C342.1 185.33 340.11 185.08 339.78 184.97C339.17 184.79 339.13 183.96 339.13 174.46C339.13 173.78 339.13 170.35 339.13 164.17L311.95 164.17L311.95 175.22C311.88 182.59 311.74 186.27 311.52 186.27ZM311.95 248.96C310.72 248.96 310.03 248.96 309.89 248.96C308 248.92 306.85 248.74 304.13 248.12C303.04 247.87 298.4 245.99 298.19 245.73C298.08 245.62 297.53 245.26 296.92 244.97C294.96 243.96 291.45 240.33 290.18 238.02C289.02 235.88 288.95 235.52 288.95 232.29C288.95 229.79 289.16 228.27 289.67 226.71C291.7 220.66 299.42 216.53 308.8 216.38C309.01 216.38 310.06 216.37 311.95 216.35L311.95 232.65L311.95 248.96ZM364.38 296.1C366.05 299.47 366.12 306.28 364.49 309.4C361.59 314.94 352.57 318.78 342.32 318.85C342.11 318.85 341.04 318.87 339.13 318.89C339.13 309.15 339.13 303.74 339.13 302.66C339.13 293.71 339.24 286.28 339.38 286.13C339.53 285.99 340.72 285.99 342.03 286.06C343.33 286.17 345.69 286.35 347.28 286.46C355.22 287.08 361.74 290.74 364.38 296.1Z" id="b1tnajLi6C"/></defs><g><g><g><use xlink:href="#a14i7Y8mso" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#a14i7Y8mso" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#bv5aQFbF" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#bv5aQFbF" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#bg7HOYbB" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#bg7HOYbB" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#c489O3zCw2" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#c489O3zCw2" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#g2yGrW5zUd" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#g2yGrW5zUd" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#aRI20oam" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#aRI20oam" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#a9NFBumeg" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#a9NFBumeg" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#ds8VpDA" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#ds8VpDA" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#e1RDPluDSa" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#e1RDPluDSa" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#a6grFkwKI" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#a6grFkwKI" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#bkj4z1z5v" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#bkj4z1z5v" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#a13Ra8y1nc" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#a13Ra8y1nc" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#a1J2l7cXYQ" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#a1J2l7cXYQ" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#d43uWrYRnQ" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#d43uWrYRnQ" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#akpRgYWBA" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#akpRgYWBA" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#e4gZrkmrlH" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#e4gZrkmrlH" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#b1tnajLi6C" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#b1tnajLi6C" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g></g></g></svg>

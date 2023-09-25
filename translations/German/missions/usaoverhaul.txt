@@ -1,0 +1,26 @@
+[config]
+name  = usaoverhaul
+guiname = "2021 | Vereinigte Staaten von Amerika"
+description = "Die Vereinigten Staaten von Amerika sind das dritt- oder viertgrößte Land der Welt nach Gesamtfläche und das drittgrößte Land der Welt. Amerikaner sind eine rassisch und ethnisch vielfältige Bevölkerung, die durch Jahrhunderte der Einwanderung geprägt wurde. Die Vereinigten Staaten sind eine Bundesrepublik und eine repräsentative Demokratie. Es ist Gründungsmitglied der Vereinten Nationen, der Weltbank, des Internationalen Währungsfonds und der NATO. Die USA sind ständiges Mitglied des Sicherheitsrats der Vereinten Nationen."
+
+jobtitle = "Präsidentin"
+
+[stats]
+Capital: = "Washington D.C."
+Population: = "328 Millionen (Januar 2020)"
+Size: = "9.8 millionen sq km"
+Largest City: = "New York City"
+Religion: = "71% Christen, 23% Keine, 2% Juden"
+Ethnicity: = "76,5% Weiß, 18,3% Latino, 13,4% Schwarz"
+National Anthem: = "Das Sternenbanner"
+Top Tourist Destination: = "Der Grand Canyon"
+Wealthiest Citizen: = "Jeff Bezos (2020)"
+
+
+
+
+
+
+
+
+

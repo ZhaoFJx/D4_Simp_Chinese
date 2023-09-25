@@ -1,0 +1,1 @@
+CreateGrudge(US History,USA,RacialTension,0.16,1,0);

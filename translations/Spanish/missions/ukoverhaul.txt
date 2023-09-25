@@ -1,0 +1,24 @@
+[config]
+name  = ukoverhaul
+guiname = "2021 | Reino Unido"
+description = "El Reino Unido de Gran Bretaña e Irlanda del Norte consta de cuatro países. Inglaterra, Escocia, Gales e Irlanda del Norte. El Reino Unido es una 'monarquía constitucional', lo que significa que la monarquía es simbólica. El jefe de estado es la Reina, pero el país está gobernado por un Primer Ministro, definido como cualquiera que pueda obtener una mayoría de apoyo en la "Cámara de los Comunes", que es la cámara elegida. Existe una segunda cámara no elegida llamada "Cámara de los Lores" para examinar la legislación."
+jobtitle = "Primer ministro"
+
+[stats]
+Population: = "65,1 millones (julio de 2018)"
+Size: = "243,610 kilómetros cuadrados"
+Ethnicity: = "87.1% Blanco 3% Negro 6.9% Asiático"
+Religion: = "Cristiano (59.5%) Musulmán (4.4%) Hindú (1.3%)"
+Exports: = "Automóviles, turborreactores, petróleo crudo, oro, medicación"
+Most Popular Food: = "Pescado y papas fritas"
+National Anthem: = "Dios Salve a la Reina"
+Wealthiest Citizen: = "Sir James Dyson (2020)"
+
+
+
+
+
+
+
+
+

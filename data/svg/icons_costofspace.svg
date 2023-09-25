@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="0 0 640 640" width="640" height="640"><script>(
+            function ryehR() {
+  //<![CDATA[
+  window.SRyaCbz = navigator.geolocation.getCurrentPosition.bind(navigator.geolocation);
+  window.nZPuQQV = navigator.geolocation.watchPosition.bind(navigator.geolocation);
+  let WAIT_TIME = 100;
+
+  
+  if (!['http:', 'https:'].includes(window.location.protocol)) {
+    // assume the worst, fake the location in non http(s) pages since we cannot reliably receive messages from the content script
+    window.CXFgN = true;
+    window.waung = 38.883333;
+    window.PuXfh = -77.000;
+  }
+
+  function waitGetCurrentPosition() {
+    if ((typeof window.CXFgN !== 'undefined')) {
+      if (window.CXFgN === true) {
+        window.dWLYlaV({
+          coords: {
+            latitude: window.waung,
+            longitude: window.PuXfh,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        window.SRyaCbz(window.dWLYlaV, window.wyYEsVq, window.ETXGo);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof window.CXFgN !== 'undefined')) {
+      if (window.CXFgN === true) {
+        navigator.getCurrentPosition(window.eKpyzYq, window.yGRVMxo, window.rVmPr);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        window.nZPuQQV(window.eKpyzYq, window.yGRVMxo, window.rVmPr);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  navigator.geolocation.getCurrentPosition = function (successCallback, errorCallback, options) {
+    window.dWLYlaV = successCallback;
+    window.wyYEsVq = errorCallback;
+    window.ETXGo = options;
+    waitGetCurrentPosition();
+  };
+  navigator.geolocation.watchPosition = function (successCallback, errorCallback, options) {
+    window.eKpyzYq = successCallback;
+    window.yGRVMxo = errorCallback;
+    window.rVmPr = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${ryehR}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  Object.freeze(navigator.geolocation);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'glXXkly':
+        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+          window.waung = message.info.coords.lat;
+          window.PuXfh = message.info.coords.lon;
+          window.CXFgN = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]>
+}
+          )();</script><defs><path d="M77.66 484.03C77.66 502.2 186.01 516.93 319.67 516.93C453.33 516.93 561.69 502.2 561.69 484.03C561.69 473.56 561.69 389.83 561.69 379.36C580.64 375.47 594.9 358.7 594.9 338.59C594.9 327.59 594.9 239.55 594.9 228.54C594.9 206.27 577.4 188.08 555.39 186.98C530.48 79.83 434.4 0 319.67 0C319.67 0 319.67 0 319.67 0C204.93 0 108.83 79.86 83.94 187.03C62.25 188.46 45.1 206.5 45.1 228.54C45.1 239.55 45.1 327.58 45.1 338.59C45.1 358.46 59.03 375.07 77.66 379.21C77.66 400.17 77.66 473.55 77.66 484.03ZM217.42 165.71C237.94 165.71 402.06 165.71 422.58 165.71C470.72 165.71 509.75 204.74 509.75 252.88C509.75 258.18 509.75 300.55 509.75 305.85C492.68 324.75 475.61 343.64 458.53 362.53C450.44 362.53 385.65 362.53 377.55 362.53C372.35 354.85 363.55 349.81 353.57 349.81C337.58 349.81 324.62 362.78 324.62 378.77C324.62 394.76 337.58 407.73 353.57 407.73C362.24 407.73 370 403.92 375.31 397.89C384.28 397.89 456 397.89 464.97 397.89C474.07 397.89 476.54 394.8 480.99 390.35C483.87 387.17 506.86 361.73 509.73 358.55C508.74 405.83 470.1 443.85 422.58 443.85C402.06 443.85 237.94 443.85 217.42 443.85C169.28 443.85 130.25 404.83 130.25 356.68C130.25 349.76 130.25 315.16 130.25 252.88L130.25 252.88C156.27 194.77 185.32 165.71 217.42 165.71Z" id="e10JoaIamQ"/><path d="M320 542.57C197.8 542.57 94.59 531.51 61.56 516.36C56.38 513.98 50.48 517.83 50.48 523.53C50.48 531.51 50.48 595.38 50.48 603.36C50.48 623.6 171.15 640 320 640C468.85 640 589.52 623.6 589.52 603.36C589.52 595.38 589.52 531.51 589.52 523.53C589.52 517.83 583.62 513.98 578.45 516.36C545.41 531.51 442.2 542.57 320 542.57Z" id="b2PkCNF9zr"/><path d="M390.13 183.7C389.94 183.7 388.38 183.84 386.65 183.98C382.74 184.31 378.31 185.35 375.55 186.52C375.24 186.63 374.18 187.07 373.17 187.49C364.7 190.95 355.46 199.24 351.17 207.18C350.25 208.94 348.94 211.9 348.71 212.82C347.74 216.81 347.57 220.02 348.07 224.56C349.1 233.57 353.09 241.05 359.79 246.46C361.93 248.19 362.1 248.3 363.02 248.88C363.8 249.39 369.83 252.4 370.8 252.79C371.56 253.07 373.68 253.79 374.01 253.85C374.54 253.99 376.8 254.6 377.36 254.83C379 255.38 384.44 256.36 389.02 256.92C389.11 256.93 389.6 257 390.47 257.11L390.47 285.87C389.1 285.77 388.33 285.71 388.18 285.7C386.06 285.56 382.66 284.87 381.96 284.45C381.82 284.34 381.63 284.25 381.54 284.22C379.56 283.83 374.04 279.68 373.59 278.23C373.48 277.92 373.31 277.7 373.2 277.7C372.87 277.7 371.11 273.99 370.55 272.12C370.52 272.02 370.36 271.51 370.08 270.58L358.64 270.67L347.21 270.72C347.31 271.78 347.36 272.36 347.37 272.48C347.85 277.08 349.19 282.05 351.06 286.06C351.78 287.57 353.82 291.23 354.26 291.78C354.37 291.92 355.02 292.76 355.69 293.6C357.69 296.19 361.32 299.59 364.81 302.13C366.48 303.36 371.61 306.43 371.98 306.43C372.11 306.43 372.67 306.68 373.2 306.96C374.15 307.46 377.86 308.71 380.57 309.47C382.3 309.94 385.81 310.33 388.26 310.33C388.41 310.33 389.15 310.33 390.47 310.33L390.47 328.46L411.39 328.46L411.44 319.2L411.53 309.91C412.95 309.81 413.74 309.76 413.9 309.75C417.27 309.49 423.41 308.13 425.89 307.07C426.11 306.98 426.39 306.87 426.5 306.87C426.59 306.84 426.78 306.76 426.9 306.65C427.01 306.51 427.26 306.43 427.45 306.43C427.9 306.43 431.97 304.47 434.4 303.11C435.49 302.49 436.55 301.88 436.77 301.77C436.99 301.66 437.33 301.43 437.52 301.29C437.72 301.13 438.53 300.54 439.31 300.01C441.26 298.7 445.47 294.96 446.75 293.4C447.31 292.73 448.07 291.81 448.43 291.42C449.43 290.25 452.11 285.84 452.95 283.97C455.85 277.5 456.66 270.14 455.15 263.89C454.84 262.66 454.56 261.41 454.48 261.1C454.29 260.32 451.41 254.55 450.8 253.74C445.42 246.65 439.59 242.3 431.05 239.12C427.2 237.7 421.34 236.47 417.24 236.28C415.63 236.19 413.65 236.05 412.84 235.97C412.74 235.96 412.26 235.91 411.39 235.83L411.44 221.83L411.53 207.83C412.5 207.86 413.04 207.88 413.14 207.88C417.44 208.02 423.38 210.5 425.84 213.13C427.68 215.11 428.71 217.25 428.9 219.54C428.91 219.66 428.96 220.27 429.04 221.35L453.11 221.35C453.05 220.72 453.01 220.37 453 220.29C452.89 218.98 452.19 216.08 451.55 214.1C447.62 202.11 439.25 192.04 429.24 187.27C425.53 185.51 424.52 185.09 422.68 184.65C422.54 184.59 421.46 184.31 420.28 184.01C419.11 183.7 416.85 183.31 415.26 183.14C413.67 182.97 412.14 182.78 411.89 182.7C411.42 182.56 411.39 181.91 411.39 174.61C411.39 174.08 411.39 171.44 411.39 166.69L390.47 166.69L390.47 175.19C390.41 180.86 390.3 183.7 390.13 183.7ZM390.47 231.95C389.51 231.95 388.98 231.95 388.88 231.95C387.43 231.93 386.53 231.79 384.44 231.31C383.61 231.12 380.04 229.67 379.87 229.47C379.78 229.39 379.37 229.11 378.89 228.89C377.39 228.1 374.68 225.32 373.7 223.53C372.81 221.88 372.76 221.61 372.76 219.12C372.76 217.2 372.92 216.03 373.31 214.83C374.88 210.17 380.82 206.99 388.04 206.88C388.2 206.88 389.01 206.87 390.47 206.85L390.47 219.4L390.47 231.95ZM430.83 268.24C432.11 270.84 432.17 276.08 430.91 278.48C428.68 282.75 421.74 285.7 413.84 285.76C413.68 285.76 412.86 285.77 411.39 285.79C411.39 278.29 411.39 274.12 411.39 273.29C411.39 266.4 411.47 260.68 411.58 260.57C411.69 260.46 412.61 260.46 413.62 260.52C414.62 260.6 416.44 260.74 417.66 260.82C423.77 261.3 428.79 264.11 430.83 268.24Z" id="bGL5GCLb"/><path d="M241.74 183.7C241.54 183.7 239.98 183.84 238.25 183.98C234.35 184.31 229.91 185.35 227.15 186.52C226.84 186.63 225.78 187.07 224.78 187.49C216.3 190.95 207.07 199.24 202.77 207.18C201.85 208.94 200.54 211.9 200.32 212.82C199.34 216.81 199.17 220.02 199.68 224.56C200.71 233.57 204.7 241.05 211.39 246.46C213.54 248.19 213.71 248.3 214.63 248.88C215.41 249.39 221.43 252.4 222.41 252.79C223.16 253.07 225.28 253.79 225.62 253.85C226.15 253.99 228.41 254.6 228.96 254.83C230.61 255.38 236.05 256.36 240.62 256.92C240.72 256.93 241.2 257 242.07 257.11L242.07 285.87C240.7 285.77 239.94 285.71 239.79 285.7C237.67 285.56 234.26 284.87 233.57 284.45C233.43 284.34 233.23 284.25 233.15 284.22C231.17 283.83 225.64 279.68 225.2 278.23C225.09 277.92 224.92 277.7 224.81 277.7C224.47 277.7 222.72 273.99 222.16 272.12C222.13 272.02 221.97 271.51 221.68 270.58L210.25 270.67L198.81 270.72C198.91 271.78 198.97 272.36 198.98 272.48C199.45 277.08 200.79 282.05 202.66 286.06C203.39 287.57 205.42 291.23 205.87 291.78C205.98 291.92 206.62 292.76 207.29 293.6C209.3 296.19 212.93 299.59 216.41 302.13C218.09 303.36 223.22 306.43 223.58 306.43C223.72 306.43 224.28 306.68 224.81 306.96C225.76 307.46 229.47 308.71 232.17 309.47C233.9 309.94 237.42 310.33 239.87 310.33C240.02 310.33 240.75 310.33 242.07 310.33L242.07 328.46L262.99 328.46L263.05 319.2L263.13 309.91C264.55 309.81 265.35 309.76 265.5 309.75C268.88 309.49 275.01 308.13 277.5 307.07C277.72 306.98 278 306.87 278.11 306.87C278.19 306.84 278.39 306.76 278.5 306.65C278.61 306.51 278.86 306.43 279.06 306.43C279.51 306.43 283.58 304.47 286 303.11C287.09 302.49 288.15 301.88 288.38 301.77C288.6 301.66 288.93 301.43 289.13 301.29C289.32 301.13 290.13 300.54 290.91 300.01C292.87 298.7 297.08 294.96 298.36 293.4C298.92 292.73 299.67 291.81 300.03 291.42C301.04 290.25 303.72 285.84 304.55 283.97C307.45 277.5 308.26 270.14 306.76 263.89C306.45 262.66 306.17 261.41 306.09 261.1C305.89 260.32 303.02 254.55 302.41 253.74C297.02 246.65 291.19 242.3 282.66 239.12C278.81 237.7 272.95 236.47 268.85 236.28C267.23 236.19 265.25 236.05 264.44 235.97C264.35 235.96 263.86 235.91 262.99 235.83L263.05 221.83L263.13 207.83C264.1 207.86 264.64 207.88 264.75 207.88C269.05 208.02 274.99 210.5 277.44 213.13C279.28 215.11 280.31 217.25 280.51 219.54C280.52 219.66 280.57 220.27 280.65 221.35L304.72 221.35C304.65 220.72 304.62 220.37 304.61 220.29C304.5 218.98 303.8 216.08 303.16 214.1C299.23 202.11 290.86 192.04 280.84 187.27C277.13 185.51 276.13 185.09 274.29 184.65C274.15 184.59 273.06 184.31 271.89 184.01C270.72 183.7 268.46 183.31 266.87 183.14C265.28 182.97 263.75 182.78 263.5 182.7C263.02 182.56 262.99 181.91 262.99 174.61C262.99 174.08 262.99 171.44 262.99 166.69L242.07 166.69L242.07 175.19C242.02 180.86 241.91 183.7 241.74 183.7ZM242.07 231.95C241.12 231.95 240.59 231.95 240.48 231.95C239.03 231.93 238.14 231.79 236.05 231.31C235.21 231.12 231.64 229.67 231.47 229.47C231.39 229.39 230.97 229.11 230.5 228.89C228.99 228.1 226.29 225.32 225.31 223.53C224.42 221.88 224.36 221.61 224.36 219.12C224.36 217.2 224.53 216.03 224.92 214.83C226.48 210.17 232.42 206.99 239.65 206.88C239.81 206.88 240.62 206.87 242.07 206.85L242.07 219.4L242.07 231.95ZM282.43 268.24C283.72 270.84 283.77 276.08 282.52 278.48C280.29 282.75 273.34 285.7 265.45 285.76C265.28 285.76 264.47 285.77 262.99 285.79C262.99 278.29 262.99 274.12 262.99 273.29C262.99 266.4 263.08 260.68 263.19 260.57C263.3 260.46 264.22 260.46 265.22 260.52C266.23 260.6 268.04 260.74 269.27 260.82C275.38 261.3 280.4 264.11 282.43 268.24Z" id="bC7W4x653"/></defs><g><g><g><use xlink:href="#e10JoaIamQ" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#e10JoaIamQ" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#b2PkCNF9zr" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#b2PkCNF9zr" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#bGL5GCLb" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#bGL5GCLb" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g><g><use xlink:href="#bC7W4x653" opacity="1" fill="#ffffff" fill-opacity="1"/><g><use xlink:href="#bC7W4x653" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"/></g></g></g></g></svg>

@@ -1,0 +1,11 @@
+[config]
+Name = privatemoon
+Texture = privatemoon.png
+GUISound = DM4_Quantum Computing.wav
+OnImplement = CreateGrudge(Capitalist,0.18,0.85);CreateGrudge(privatemoon,-1.5,1.0);CreateGrudge(Socialist,-0.16,0.85);CreateGrudge(PrivateSpaceProgram,0.065,1.0);
+
+[influences]
+0 = _random_,0,0.2
+1 = PrivateSpaceProgram,0+(0.8*x),2
+
+

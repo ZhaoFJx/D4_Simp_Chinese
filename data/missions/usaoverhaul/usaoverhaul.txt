@@ -1,0 +1,137 @@
+[config]
+currency = "$"
+population = 164000
+economic_cycle_start = 0.2
+min_income = 0
+max_income = 195000
+name  = usaoverhaul
+names_file = "data/names/usanames.txt"
+flag = "flag_usa.png"
+map = "usflagnew.svg"
+GUID = 11
+fx_rate_to_pound = 1.3
+apathy = 0.5
+starting_debt = 24722000
+min_gdp = 11600000
+max_gdp = 36000000
+wealth_mod = 35.11
+
+
+[policies]
+AbortionLaw = 0.75
+AgricultureSubsidies = 0.25
+AirlineTax = 0.02
+AlcoholLaw = 0.6
+AlcoholTax = 0.1
+ArmedPolice = 0.95
+ArtsSubsidies = 0.10
+BodyCameras = 0.47
+BorderControls = 0.55
+CapitalGainsTax = 0.2
+CarTax = 0.35
+CharityTaxRelief = 0.25
+ChildBenefit = 0.85
+CitizenshipTests = 0.65
+CleanEnergySubsidies = 0.15
+CommunityPolicing = 0.2
+CorporationTax = 0.29
+Creationism = 0.5
+DeathPenalty = 0.2
+DisabilityBenefit = 0.1
+ExecutiveTermLimit = 0
+ExecutiveTermLength = 0.24
+FaithSchoolSubsidies = 0.05
+FamilyPlanning = 0.25
+FemaleGenitalMutilationBan = 0.09
+FoodStandards = 0.5
+FoodStamps = 0.52
+ForeignAid = 0.25
+FreeSchoolMeals = 0.15
+GameHunting = 0.25
+GatedCommunities = 0.69
+GayMarriage = 0.75
+GenderDiscriminationAct = 0.25
+GenderTransition = 0.35
+HandgunLaws = 0.4
+HealthTaxCredits = 0.2
+IncomeTax = 0.46
+InheritanceTax = 0.05
+IntelligenceServices = 0.82
+IntellectualPropertyRights = 0.95
+JudiciaryIndependence = 0.8
+JuryTrial = 0.6
+LabourLaws = 0.16
+LegalAid = 0.5
+LimitAutomatedTrading = 0
+MilitarySpending = 1.0
+MinimumWage = 0.25
+Narcotics = 0.25
+NuclearFission = 0.2
+PayrollTax = 0.58
+PetrolTax = 0.04
+PoliceForce = 0.65
+PollutionControls = 0.38
+PressFreedom = 0.87
+PrisonerTagging = 0.2
+PrivatePrisons = 0.4
+Prisons = 0.1
+PrisonRegime = 0.55
+PropertyTax = 0.1
+RaceDiscriminationAct = 0.75
+Recycling = 0.35
+RubberBullets = 0.1
+SalesTax = 0.1
+SchoolBuses = 0.85
+ScienceFunding = 0.56
+SelectiveSchooling = 0.5
+SpeedCameras = 0.4
+SocialCare = 0.1
+SpaceProgram = 0.35
+StateBroadcaster = 0.02
+StatePostService = 0.55
+TearGas = 0.30
+TechnologyColleges = 0.55
+TobaccoTax = 0.33
+StateHousing = 0.28
+Tasers = 0.3
+UnemployedBenefit = 0.55
+WitnessProtectionProgram = 0.50
+WorkSafetyLaw = 0.45
+StateHealthService = 0.15
+StatePensions = 0.35
+StateSchools = 0.8
+natomembership = 0.75
+armsexports = 0.05
+immigrationenforcement = 0.55
+BorderWall = 0.1
+unmembership = 0.6
+secretservice = 0.85
+UniversityGrants = 0.4
+spaceforce = 0.2
+nuclearsanctions = 0.4
+middleeasttroopssecure = 0.25
+middleeasttroopsstable = 0.1
+NuclearWeapons = 0.83
+_prereq_has_coast = 1
+_prereq_sovereign_currency = 1
+_prereq_wmd = 1
+_prereq_hurricane = 1
+_prereq_mining_industry = 1
+_prereq_poachers = 1
+_prereq_indigenous = 1
+_prereq_land_border = 1
+_prereq_deadly_animals = 1
+_prereq_reserve_currency = 1
+_prereq_nuclear_tech = 1
+
+[options]
+
+
+
+
+
+
+
+
+
+
